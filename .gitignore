@@ -1,6 +1,6 @@
 # Ignore object files in obj/ and bin/
-/obj/
-/bin/
+obj/
+bin/
 
 # Ignore doctest header
 doctest.h
