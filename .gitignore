@@ -1,0 +1,9 @@
+# Ignore object files in obj/ and bin/
+obj/*.o
+bin/
+
+# Ignore doctest header
+doctest.h
+
+# Ignore vscode settings
+.vscode/
