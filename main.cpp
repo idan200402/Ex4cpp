@@ -19,10 +19,10 @@ int main() {
     } catch (const std::runtime_error& e) {
         std::cout << "Error: " << e.what() << std::endl;  // This should throw an error
     }
-    // for (auto it = container.begin_ascending_order(); it != container.end_ascending_order(); ++it) {
-    //     std::cout << *it << ' ';   // 1 2 6 7 15
-    // }
-    // std::cout << std::endl;
+    for (auto it = container.begin_ascending_order(); it != container.end_ascending_order(); ++it) {
+        std::cout << *it << ' ';   // 1 2 6 7 15
+    }
+    std::cout << std::endl;
 
     // for (auto it = container.begin_descending_order(); it != container.end_descending_order(); ++it) {
     //     std::cout << *it << ' ';  // 15 7 6 2 1
@@ -34,15 +34,17 @@ int main() {
     // }
     // std::cout << std::endl;
 
+    // std::cout << "This is the containers content in reverse order: "<<std::endl;
     // for (auto it = container.begin_reverse_order(); it != container.end_reverse_order(); ++it) {
-    //     std::cout << *it << ' ';  // 2 1 6 15 7
+    //     std::cout << *it << ' ';  
     // }
     // std::cout << std::endl;
 
-    // for (auto it = container.begin_order(); it != container.end_order(); ++it) {
-    //     std::cout << *it << ' ';  // 7 15 6 1 2
-    // }
-    // std::cout << std::endl;
+    std::cout << "This is the containers content in normal order: "<<std::endl;
+    for (auto it = container.begin_order(); it != container.end_order(); ++it) {
+        std::cout << *it << ' ';  
+    }
+    std::cout << std::endl;
 
     // for (auto it = container.begin_middle_out_order(); it != container.end_middle_out_order(); ++it) {
     //     std::cout << *it << ' ';  // 6 15 1 7 2

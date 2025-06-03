@@ -45,6 +45,43 @@ template <typename T = int> class MyContainer{
         const std::vector<T>& getData() const {
             return data;
         }
+        Order<T> begin_order() const {
+            return Order<T>(*this, true);
+        }
+        Order<T> end_order() const {
+            return Order<T>(*this, false);
+        }
+        AscendingOrder<T> begin_ascending_order() const {
+            return AscendingOrder<T>(*this, true);
+        }
+        AscendingOrder<T> end_ascending_order() const {
+            return AscendingOrder<T>(*this, false);
+        }
+        DescendingOrder<T> begin_descending_order() const {
+            return DescendingOrder<T>(*this, true);
+        }
+        DescendingOrder<T> end_descending_order() const {
+            return DescendingOrder<T>(*this, false);
+        }
+        SideCrossOrder<T> begin_side_cross_order() const {
+            return SideCrossOrder<T>(*this, true);
+        }
+        SideCrossOrder<T> end_side_cross_order() const {
+            return SideCrossOrder<T>(*this, false);
+        }
+        ReverseOrder<T> begin_reverse_order() const {
+            return ReverseOrder<T>(*this, true);
+        }
+        ReverseOrder<T> end_reverse_order() const {
+            return ReverseOrder<T>(*this, false);
+        }
+        MiddleOutOrder<T> begin_middle_out_order() const {
+            return MiddleOutOrder<T>(*this, true);
+        }
+        MiddleOutOrder<T> end_middle_out_order() const {
+            return MiddleOutOrder<T>(*this, false);
+        }
+
        
         
     };
