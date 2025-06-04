@@ -10,31 +10,36 @@ namespace ex4 {
     template <typename T>
     class MiddleOutOrder : public BaseIterator<T> {
         public:
-            MiddleOutOrder(const MyContainer<T>& container, bool isBeginning) {
-                const auto& data = container.getData();
+            MiddleOutOrder() = default;
+            MiddleOutOrder(std::vector<T> middleOutView, size_t index = 0):
+                BaseIterator <T>(std::move(middleOutView), index) {} 
+            static std::pair<MiddleOutOrder<T>, MiddleOutOrder<T>> make(const MyContainer<T>& container){
+                std::vector<T> data = container.getData();
                 int n = data.size();
+                std::vector<T> middleOutView;
+                middleOutView.reserve(n);
                 if(n == 0) {
-                    this->setCurrent(this->view.begin());
-                    this->setEnd(this->view.end());
-                    return;
+                    return { MiddleOutOrder<T>(), MiddleOutOrder<T>() };
                 }
                 int middle = n / 2;
-                this->view.push_back(data[middle]);
+                middleOutView.push_back(data[middle]);
                 int left = middle - 1;
                 int right = middle + 1;
                 bool leftTurn = true;
                 while (left >= 0 || right < n) {
                     if (leftTurn && left >= 0) {
-                        this->view.push_back(data[left]);
+                        middleOutView.push_back(data[left]);
                         --left;
                     } else if (!leftTurn && right < n) {
-                        this->view.push_back(data[right]);
+                        middleOutView.push_back(data[right]);
                         ++right;
                     }
                     leftTurn = !leftTurn;
                 }
-                this->setCurrent(isBeginning ? this->view.begin() : this->view.end());
-                this->setEnd(this->view.end());
+                return {
+                    MiddleOutOrder<T>(middleOutView, 0),
+                    MiddleOutOrder<T>(middleOutView, middleOutView.size())
+                };
             }
         };
     }

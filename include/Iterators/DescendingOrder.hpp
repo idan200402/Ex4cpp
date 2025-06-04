@@ -9,11 +9,16 @@ namespace ex4 {
     template <typename T>
     class DescendingOrder : public BaseIterator<T> {
     public:
-        DescendingOrder(const MyContainer<T>& container, bool isBeginning) {
-            this->view = container.getData();
-            std::sort(this->view.begin(), this->view.end(), std::greater<T>());
-            this->setCurrent(isBeginning ? this->view.begin() : this->view.end());
-            this->setEnd(this->view.end());
+        DescendingOrder(std::vector<T> sortedView, size_t index = 0)
+            : BaseIterator<T>(std::move(sortedView), index) {}
+
+        static std::pair<DescendingOrder, DescendingOrder> make(const MyContainer<T>& container) {
+            std::vector<T> data = container.getData();
+            std::sort(data.begin(), data.end(), std::greater<T>());
+            return {
+                DescendingOrder(data, 0),
+                DescendingOrder(data, data.size())
+            };
         }
     };
 }

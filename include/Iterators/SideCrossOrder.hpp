@@ -9,25 +9,29 @@ namespace ex4 {
     template <typename T>
     class SideCrossOrder : public BaseIterator<T> {
     public:
-        SideCrossOrder(const MyContainer<T>& container, bool isBeginning) {
-            const auto& data = container.getData();
-            this->view.reserve(data.size());
-            size_t left = 0;
-            size_t right = data.size() - 1;
+        SideCrossOrder(std::vector<T> sideCrossView, size_t index = 0):
+            BaseIterator<T>(std::move(sideCrossView), index) {}
+        static std::pair<SideCrossOrder<T>, SideCrossOrder<T>> make(const MyContainer<T>& container) {
+        std::vector<T> data = container.getData();
+        std::sort(data.begin(), data.end());
 
-            while (left <= right) {
-                if (left == right) {
-                    this->view.push_back(data[left]);
-                } else {
-                    this->view.push_back(data[left]);
-                    this->view.push_back(data[right]);
-                }
-                ++left;
-                --right;
+        std::vector<T> sideCrossView;
+        size_t left = 0;
+        size_t right = data.size() - 1;
+
+        while (left <= right) {
+            if (left == right) {
+                sideCrossView.push_back(data[left]);
+                break;
             }
-
-            this->setCurrent(isBeginning ? this->view.begin() : this->view.end());
-            this->setEnd(this->view.end());
+            sideCrossView.push_back(data[left++]);
+            sideCrossView.push_back(data[right--]);
         }
+
+        return {
+            SideCrossOrder<T>(sideCrossView, 0),
+            SideCrossOrder<T>(sideCrossView, sideCrossView.size())
+        };
+    }
     };
 }

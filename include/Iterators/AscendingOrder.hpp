@@ -7,19 +7,19 @@ namespace ex4 {
     class MyContainer;
     template <typename T>
 class AscendingOrder : public BaseIterator<T> {
-    std::vector<T> sortedView;
+public:
+    AscendingOrder(std::vector<T> sortedView, size_t index = 0)
+        : BaseIterator<T>(std::move(sortedView), index) {}
 
-    public:
-        AscendingOrder(const MyContainer<T>& container, bool isBeginning)
-            : sortedView(container.getData())  // first, copy
-        {
-            std::sort(sortedView.begin(), sortedView.end());
-            this->setView(sortedView);  // assign to BaseIterator properly
-            this->setCurrent(isBeginning ? sortedView.begin() : sortedView.end());
-            this->setEnd(sortedView.end());
-        }
-    };
+    // Factory method to construct begin and end iterators
+    static std::pair<AscendingOrder, AscendingOrder> make(const MyContainer<T>& container) {
+        std::vector<T> data = container.getData();
+        std::sort(data.begin(), data.end());
+        return {
+            AscendingOrder(data, 0),
+            AscendingOrder(data, data.size())
+        };
+    }
+};
 
-
-}
-            
+}    

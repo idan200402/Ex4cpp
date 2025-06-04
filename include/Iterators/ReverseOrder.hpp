@@ -11,12 +11,16 @@ namespace ex4 {
     template <typename T>
     class ReverseOrder : public BaseIterator<T> {
     public:
-        ReverseOrder(const MyContainer<T>& container, bool isBeginning) {
-            std::vector<T> reversedData = container.getData();
-            std::reverse(reversedData.begin(), reversedData.end());
-            this->view = std::make_shared<std::vector<T>>(std::move(reversedData));
-            this->setCurrent(isBeginning ? this->view->begin() : this->view->end());
-            this->setEnd(this->view->end());
+        ReverseOrder(std::vector<T> reversedView, size_t index = 0)
+            : BaseIterator<T>(std::move(reversedView), index) {}
+
+        static std::pair<ReverseOrder, ReverseOrder> make(const MyContainer<T>& container) {
+            std::vector<T> data = container.getData();
+            std::reverse(data.begin(), data.end());
+            return {
+                ReverseOrder(data, 0),
+                ReverseOrder(data, data.size())
+            };
         }
     };
 }

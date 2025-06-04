@@ -19,14 +19,18 @@ namespace ex4 {
 template <typename T = int> class MyContainer{
     private:
         std::vector<T> data;
+        void print(std::ostream& os = std::cout) const{
+            for (const auto& elem : data) {
+                os << elem << ' ';
+            }
+            os << std::endl;
+        }
     public:
         MyContainer() = default;
         void addElement(const T& value){
-            static_assert(std::is_integral<T>::value, "T must be an integral type");
             data.push_back(value);    
         }
         void removeElement(const T& value){
-            static_assert(std::is_integral<T>::value, "T must be an integral type");
             auto newEnd = std::remove(data.begin(), data.end(), value);
             if (newEnd == data.end() && std::find(data.begin(), data.end(), value) == data.end()) {
                 throw std::runtime_error("This element does not exist in the container");
@@ -36,50 +40,49 @@ template <typename T = int> class MyContainer{
         size_t size() const {
             return data.size();
         }
-        void print(std::ostream& os = std::cout) const{
-            for (const auto& elem : data) {
-                os << elem << ' ';
-            }
-            os << std::endl;
-        }
+        template <typename U>
+        friend std::ostream& operator<<(std::ostream& os, const MyContainer<U>& container);
+
         const std::vector<T>& getData() const {
             return data;
         }
         Order<T> begin_order() const {
-            return Order<T>(*this, true);
+            return Order<T>::make(*this).first;
         }
         Order<T> end_order() const {
-            return Order<T>(*this, false);
+            return Order<T>::make(*this).second;
         }
         AscendingOrder<T> begin_ascending_order() const {
-            return AscendingOrder<T>(*this, true);
+            return AscendingOrder<T>::make(*this).first;
         }
+
         AscendingOrder<T> end_ascending_order() const {
-            return AscendingOrder<T>(*this, false);
+            return AscendingOrder<T>::make(*this).second;
         }
+
         DescendingOrder<T> begin_descending_order() const {
-            return DescendingOrder<T>(*this, true);
+            return DescendingOrder<T>::make(*this).first;
         }
         DescendingOrder<T> end_descending_order() const {
-            return DescendingOrder<T>(*this, false);
+            return DescendingOrder<T>::make(*this).second;
         }
         SideCrossOrder<T> begin_side_cross_order() const {
-            return SideCrossOrder<T>(*this, true);
+            return SideCrossOrder<T>::make(*this).first;
         }
         SideCrossOrder<T> end_side_cross_order() const {
-            return SideCrossOrder<T>(*this, false);
+            return SideCrossOrder<T>::make(*this).second;
         }
         ReverseOrder<T> begin_reverse_order() const {
-            return ReverseOrder<T>(*this, true);
+            return ReverseOrder<T>::make(*this).first;
         }
         ReverseOrder<T> end_reverse_order() const {
-            return ReverseOrder<T>(*this, false);
+            return ReverseOrder<T>::make(*this).second;
         }
         MiddleOutOrder<T> begin_middle_out_order() const {
-            return MiddleOutOrder<T>(*this, true);
+            return MiddleOutOrder<T>::make(*this).first;
         }
         MiddleOutOrder<T> end_middle_out_order() const {
-            return MiddleOutOrder<T>(*this, false);
+            return MiddleOutOrder<T>::make(*this).second;
         }
 
        
