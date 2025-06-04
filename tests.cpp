@@ -337,6 +337,20 @@ TEST_CASE("Iterators Traversal Correctness") {
         ++it;
         CHECK(it == container.end_reverse_order()); // should reach the end
     }
+    SUBCASE("Testing the Decsending Order Iterator on students") {
+        MyContainer<Student> container;
+        container.addElement({"Alice", 20});
+        container.addElement({"Bob", 22});
+        container.addElement({"Charlie", 19});
+        auto it = container.begin_descending_order();
+        CHECK(*it == Student{"Bob", 22}); // first element should be Bob
+        ++it;
+        CHECK(*it == Student{"Alice", 20}); // second element should be Alice
+        ++it;
+        CHECK(*it == Student{"Charlie", 19}); // third element should be Charlie
+        ++it;
+        CHECK(it == container.end_descending_order()); // should reach the end
+    }
     SUBCASE("Middle Out Order Iterator") {
         MyContainer<int> container;
         container.addElement(1);

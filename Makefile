@@ -36,6 +36,11 @@ $(TARGET_TEST): $(TEST_OBJ)
 $(TEST_OBJ): $(TEST_SRC)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# === Valgrind ===
+valgrind: $(TARGET_MAIN) $(TARGET_TEST)
+	valgrind --leak-check=full --track-origins=yes ./$(TARGET_MAIN)
+	valgrind --leak-check=full --track-origins=yes ./$(TARGET_TEST)
+
 # === Clean ===
 clean:
 	rm -rf $(OBJ_DIR)/*.o $(BIN_DIR)/*
