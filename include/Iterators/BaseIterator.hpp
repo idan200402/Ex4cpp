@@ -51,6 +51,17 @@ public:
         return view[currentIndex];
     }
     /**
+     * @brief Overloaded arrow operator to access the current element in the view.
+     * @return A pointer to the current element in the view.
+     * @throw std::out_of_range if the current index is past the end of the view.
+     */
+    const T* operator->() const {
+        if (currentIndex >= endIndex) {
+            throw std::out_of_range("Dereferencing past the end");
+        }
+        return &view[currentIndex];
+    }
+    /**
      * @brief Overloaded pre-increment operator to move the iterator to the next element.
      * @return A reference to the current iterator after incrementing.
      */

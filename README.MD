@@ -43,10 +43,10 @@ Makefile: used to build the project.
 2. Navigate to the project directory.
 3. make commands:
 ```
-    - `make Main`: Compiles the main program and executes it.
-    - `make tests`: Compiles the unit tests and executes them.
-    - `make clean`: Cleans up the build files.
-    - `make valgrind`: Runs the unit tests and the main with Valgrind to check for memory leaks.
+    - make Main: Compiles the main program and executes it.
+    - make tests: Compiles the unit tests and executes them.
+    - make clean: Cleans up the build files.
+    - make valgrind: Runs the unit tests and the main with Valgrind to check for memory leaks.
 ```
 Denote: Ensure you have a C++ compiler and the necessary build tools installed on your system.
 

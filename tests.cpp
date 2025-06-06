@@ -158,6 +158,7 @@ TEST_CASE("Iterators Functionality") {
         CHECK(*it == 1); // should still be 1
         CHECK_THROWS_AS(--it, std::out_of_range); // should throw an error since we are trying to decrement past the beginning
     }
+    
     SUBCASE("Iterator == equal operator overload") {
         auto it1 = container.begin_order();
         auto it2 = container.begin_order();
@@ -167,6 +168,7 @@ TEST_CASE("Iterators Functionality") {
         ++it1; // move to the second element
         CHECK(it1 == it2); // now they should be equal again
     }
+
     SUBCASE("Iterator out of range exception") {
         auto it = container.begin_order();
         CHECK(*it == 1); // first element should be 1
@@ -175,6 +177,17 @@ TEST_CASE("Iterators Functionality") {
         CHECK(*it == 3); // third element should be 3
         ++it; // move past the end
         CHECK_THROWS_AS(*it, std::out_of_range); // should throw an error since we are trying to dereference past the end
+    }
+    SUBCASE("Iterator -> arrow operator overload") {
+        MyContainer<Student> studentContainer;
+        studentContainer.addElement({"Alice", 20});
+        studentContainer.addElement({"Bob", 22});
+        auto it = studentContainer.begin_order();
+        CHECK(it->name == "Alice"); // first element should be Alice
+        CHECK(it->age == 20); // first element's age should be 20
+        ++it; // move to the second element
+        CHECK(it->name == "Bob"); // second element should be Bob
+        CHECK(it->age == 22); // second element's age should be 22
     }
     SUBCASE("Trying to dereference an iterator that is past the end") {
         auto it = container.begin_order();
